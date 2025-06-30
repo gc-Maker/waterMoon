@@ -5,16 +5,33 @@ module.exports = {
     entry: path.join(__dirname, '/src/index.tsx'),
     output: {
         path: path.join(__dirname + '/dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.jsx']
+        extensions: ['.tsx', '.ts', '.js', '.jsx'],
+        alias: {
+            '@': path.resolve(__dirname, 'src'),
+            '@@': path.resolve(__dirname, 'public'),
+        },
     },
     module: {
         rules: [
             {
                 test: /\.(css|less)$/,
-                use: ['style-loader', 'css-loader', 'less-loader']
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                localIdentName:
+                                    '[name]__[local]--[hash:base64:5]',
+                            },
+                            sourceMap: true,
+                        },
+                    },
+                    'less-loader',
+                ],
             },
             {
                 test: /\.(ts|tsx|js|jsx)$/,
@@ -25,24 +42,19 @@ module.exports = {
                         options: {
                             presets: [
                                 '@babel/preset-react',
-                                '@babel/preset-typescript'
-                            ]
-                        }
+                                '@babel/preset-typescript',
+                            ],
+                            sourceMaps: true,
+                        },
                     },
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            transpileOnly: true
-                        }
-                    }
-                ]
+                ],
             },
-        ]
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.join(__dirname + '/public/index.html')
-        })
+            template: path.join(__dirname + '/public/index.html'),
+        }),
     ],
     devServer: {
         static: path.join(__dirname, 'dist'),
@@ -50,4 +62,5 @@ module.exports = {
         port: 3000,
         open: true,
     },
-}
+    devtool: 'source-map',
+};

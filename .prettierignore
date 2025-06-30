@@ -1,9 +1,7 @@
 node_modules
 dist
 public
-.eslintrc.js
 .prettierrc.js
-webpack.config.js
 tsconfig.json
 README.md
 package.json

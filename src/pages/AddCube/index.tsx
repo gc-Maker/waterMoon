@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState, memo } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import _ from 'lodash';
-
 import {
     gridSize,
     isPositionValid,
@@ -17,7 +16,7 @@ const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
     0.1,
-    1000,
+    100,
 );
 const renderer = new THREE.WebGLRenderer({
     antialias: true,
